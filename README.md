@@ -4,15 +4,28 @@
 ## Table of Contents
 
 - [Overview](#overview)
+- [Getting Started](#getting-started)
 - [Usage and Configuration Instructions](#usage-and-configuration-instructions)
 
 
 ## Overview
 
-In this assignment I created Xacro files of a differential-drive robot, simulate it in Gazebo and control it using ROS (using `diff_drive` package).
+In this assignment I created Xacro files of a differential-drive robot, simulate it in Gazebo and control it using ROS (using `diff_drive` package).<br>
 1. The robot moves through a world filled with Jersey Barriers and trash.
 2. The robot is be able to follow a rectangular path.
 3. The robot is be able to flip over and continue driving.
+
+
+## Getting Started
+
+Create a workspace, clone the repo, and build the workspace:
+```
+mkdir -p ws/src && cd ws/src
+git clone https://github.com/YaelBenShalom/Gazebo-Differential-Drive.git
+cd ../..
+catkin_make
+source devel/setup.bash 
+```
 
 
 ## Usage and Configuration instructions
