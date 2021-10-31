@@ -1,0 +1,16 @@
+  box_L: 0.8
+  box_W: 0.5
+  box_H: 0.2
+  box_mass: 2
+  wheel_scale: 5
+  caster_radius: 0.03
+  caster_mass: 0.005
+
+  width: 6
+  height: 6
+  period: 60
+  pub_freq: 100
+  linear_velocity: 0.06
+  angular_velocity: 0.06
+  Flip_velocity: 0.285 # With asphalt plane
+  # Flip_velocity: 0.27 # Without asphalt plane

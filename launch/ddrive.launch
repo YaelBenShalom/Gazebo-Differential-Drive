@@ -1,0 +1,29 @@
+<launch>
+  <arg name="Gazebo" default="True" />
+  <arg name="follow_rect" default="False" />
+  <arg name="flip_over" default="False" />
+
+  <arg name="x_pos" default="-3.0"/>
+  <arg name="y_pos" default="-3.0"/>
+  <arg name="z_pos" default="0.1"/>
+
+  <rosparam command="load" file="$(find diff_drive)/config/ddrive.yaml" />
+  <param name="robot_description" command="$(find xacro)/xacro --inorder $(find diff_drive)/urdf/ddrive.urdf.xacro" />
+
+  <node pkg="gazebo_ros" type="spawn_model" name="spawn_urdf" args="-urdf -model ddrive -x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos) -param robot_description" />
+
+  <group if="$(arg follow_rect)">
+    <node name="follow_rect" pkg="diff_drive" type="follow_rect" />
+  </group>
+
+  <group if="$(arg flip_over)">
+    <node name="flip_over" pkg="diff_drive" type="flip_over" />
+  </group>
+
+  <group if="$(arg Gazebo)">
+    <include file="$(find gazebo_ros)/launch/empty_world.launch" >
+      <arg name="world_name" value="$(find diff_drive)/worlds/ddrive.world" />
+    </include>
+  </group>
+
+</launch>

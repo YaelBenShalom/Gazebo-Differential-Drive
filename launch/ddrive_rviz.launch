@@ -1,0 +1,35 @@
+<launch>
+   <arg name="gui" default="False" />
+   <arg name="rviz" default="True" />
+   <arg name="Gazebo" default="True" />
+
+   <arg name="x_pos" default="-3.0"/>
+   <arg name="y_pos" default="-3.0"/>
+   <arg name="z_pos" default="0.1"/>
+
+   <rosparam command="load" file="$(find diff_drive)/config/ddrive.yaml" />
+   <param name="robot_description" command="$(find xacro)/xacro --inorder $(find diff_drive)/urdf/ddrive.urdf.xacro" />
+
+   <node name="follow_rect" pkg="diff_drive" type="follow_rect" />
+
+   <group if="$(arg rviz)">
+        <node name="rviz" pkg="rviz" type="rviz" args="-d $(find diff_drive)/rviz/ddrive.rviz" />
+        <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+        <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+   </group>
+   
+   <group if="$(arg gui)">
+        <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" />
+   </group>
+
+   <rosparam command="load" file="$(find diff_drive)/config/ddrive.yaml" />
+   <param name="robot_description" command="$(find xacro)/xacro --inorder $(find diff_drive)/urdf/ddrive.urdf.xacro" />
+   <node pkg="gazebo_ros" type="spawn_model" name="spawn_urdf" args="-urdf -model ddrive -x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos) -param robot_description" />
+
+   <group if="$(arg Gazebo)">
+        <include file="$(find gazebo_ros)/launch/empty_world.launch" >
+            <arg name="world_name" value="$(find diff_drive)/worlds/ddrive.world" />
+        </include>
+   </group>
+
+</launch>
